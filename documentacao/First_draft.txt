@@ -1,0 +1,44 @@
+# Apenas organizando minhas primeiras ideias a medida que leio o documento "prova-1202".
+
+## Tarefa principal:
+  > Ser capaz de realizar venda.
+  > Ser capaz de realizar entrada/saída em estoque.
+  > Incluir estrutura básica que permita a realização destas tarefas.
+
+## Contexto/problemática:
+  > Venda:
+    1. Definir informações do pedido
+      - Criar pedido (saída em estoque)
+      - Selecionar filial
+      - Selecionar usuário
+      - Selecionar cliente
+      - Adicionar observação para entrega
+    2. Adicionar itens ao pedido
+      - Buscar itens (id, código de barras, descrição) -> definir quantidade ( 0 < qtd <= max.estoque.filial )
+      - Cada item tem: status, quantidade, valor unitário, valor total ( qtd * valU )
+      - Estados:
+        + Ativo: no pedido
+        + Cancelado: ao ser removido do pedido
+        + Processado: após confirmação do pagamento
+      - Produtos repetidos: NÃO (pelo menos não enquanto ativos ou processados)
+      - Total: atualizado sempre que adicionar item
+    3. Pagamento
+      - A vista/boleto/cartão
+      - Muda status dos itens para "processado"
+      - Decrementa volume no estoque (da filial)
+  > Controle de estoque (entrada/saída):
+    * Cada filial tem estoque próprio (individual) de cada produto
+    * Entrada e saída de mercadoria em filial é feita apenas por operações de estoque (e/s)
+    * Pedido: itens, quantidades, e/s
+      - Entrada:
+        + Caso exista, incrementar
+        + Else, criar
+      - Saída:
+        + Decrementar da filial
+
+## Competências
+  > 1. Domínios = classes?
+  > 2. Operações requeridas.
+  > 3. Código bem amarrado, validando entradas e obedecendo estipulações do contexto.
+  > 4. Usuário tem de poder testar.
+  > BD opcional, mas diagramas e consultas são requeridos.
