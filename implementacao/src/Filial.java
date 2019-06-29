@@ -2,11 +2,13 @@ public class Filial {
 	// Classe que representa a loja/filial
 	private int idFilial;
 	private String descricao;
+	private Estoque estoque;
 	
 	// Init
-	public Filial(int id, String desc) {
+	public Filial(int id, String desc, Estoque estoque) {
 		this.idFilial = id;
 		this.descricao = desc;
+		this.estoque = estoque;
 	}
 	
 	// Get stuff
@@ -16,13 +18,16 @@ public class Filial {
 	public String getDescricao() {
 		return this.descricao;
 	}
+	public Estoque getEstoque() {
+		return this.estoque;
+	}
 	
 	// Change stuff
-	public boolean changeDesc(String nDesc) {
+	public int changeDesc(String nDesc) {
 		this.descricao = nDesc;
 		if(this.descricao == nDesc)
-			return true; // Funcionou
+			return 0; // ok
 		else
-			return false;// Não funcionou
+			return -1;// not ok
 	}
 }

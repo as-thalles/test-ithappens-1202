@@ -26,19 +26,20 @@ public class Produto {
 	public String getPesoUnid() {
 		return this.peso_unid;
 	}
+	
 	// Change stuff
-	public boolean changeDesc(String nDesc) {
+	public int changeDesc(String nDesc) {
 		this.descricao = nDesc;
 		if(this.descricao == nDesc)
-			return true; // Funcionou
+			return 0; // ok
 		else
-			return false;// Não funcionou
+			return -1;// not ok
 	}
-	public boolean changePreco(float nPreco) {
+	public int changePreco(float nPreco) {
 		this.preco = nPreco;
 		if(this.preco == nPreco)
-			return true;
+			return 0; // ok
 		else
-			return false;
+			return -1;// not ok
 	}
 }

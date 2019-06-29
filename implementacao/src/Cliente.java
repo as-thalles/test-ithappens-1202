@@ -16,4 +16,13 @@ public class Cliente {
 	public String getNome() {
 		return this.nome;
 	}
+	
+	// Change stuff
+	public int changeNome(String nNome) {
+		this.nome = nNome;
+		if(this.nome == nNome)
+			return 0; // ok
+		else
+			return -1;// not ok
+	}
 }

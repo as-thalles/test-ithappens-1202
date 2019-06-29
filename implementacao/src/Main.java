@@ -3,52 +3,51 @@ import java.util.ArrayList;
 public class Main {
 	public static void main(String[] args) {
 		// Inicializando "Bancos de dados" de teste
-		ArrayList<Produto> tablePDB_produto = createPoductsInPDB(); // Pseudo database Produto
+		ArrayList<Usuario> tablePDB_usuario = createUsuarioInPDB(); // Pseudo database Usuario
 		ArrayList<Cliente> tablePDB_cliente = createClienteInPDB(); // Pseudo database Cliente
+		ArrayList<Produto> tablePDB_produto = createPoductsInPDB(); // Pseudo database Produto
 		ArrayList<Filial> tablePDB_filial = createFilialInPDB(); // Pseudo database Filial
-		ArrayList<Usuario> tablePDB_usuario = createUsuarioInPDB(); // Pseudo database Filial
-		
 	}
 
 	private static ArrayList<Produto> createPoductsInPDB() {
 		ArrayList<Produto> produtosPDB = new ArrayList<Produto>();
-		produtosPDB.add(new Produto(1,	"Arroz 1kg",			3.99f,	"unid"));
-		produtosPDB.add(new Produto(2,	"Sal 1kg",				0.99f,	"unid"));
-		produtosPDB.add(new Produto(3,	"Abacaxi",				2.99f,	"peso"));
-		produtosPDB.add(new Produto(4,	"Uva",					3.49f, 	"peso"));
-		produtosPDB.add(new Produto(5,	"Nescau 500g",			5.99f, 	"unid"));
-		produtosPDB.add(new Produto(6,	"Biscoito chocolate", 	1.55f, 	"unid"));
-		produtosPDB.add(new Produto(7,	"Fone de ouvido", 		59.00f,	"unid"));
-		produtosPDB.add(new Produto(8,	"Cabo USB", 			15.00f, "unid"));
-		produtosPDB.add(new Produto(9,	"Detergente 600ml",		6.90f, 	"unid"));
-		produtosPDB.add(new Produto(10,	"Sabao em barra 500g",	10.39f, "unid"));
+		produtosPDB.add(new Produto(1,	"ARROZ 1KG",			3.99f,	"UNID"));
+		produtosPDB.add(new Produto(2,	"SAL 1KG",				0.99f,	"UNID"));
+		produtosPDB.add(new Produto(3,	"ABACAXI",				2.99f,	"PESO"));
+		produtosPDB.add(new Produto(4,	"UVA",					3.49f, 	"PESO"));
+		produtosPDB.add(new Produto(5,	"NESCAU 500G",			5.99f, 	"UNID"));
+		produtosPDB.add(new Produto(6,	"BISCOITO DE CHOCOLATE",1.55f, 	"UNID"));
+		produtosPDB.add(new Produto(7,	"FONE DE OUVIDO", 		59.00f,	"UNID"));
+		produtosPDB.add(new Produto(8,	"CABO USB", 			15.00f, "UNID"));
+		produtosPDB.add(new Produto(9,	"DETERGENTE 600ML",		6.90f, 	"UNID"));
+		produtosPDB.add(new Produto(10,	"SABAO EM BARRA 600G",	10.39f, "UNID"));
 		return produtosPDB;
 	}
 	
 	private static ArrayList<Cliente> createClienteInPDB() {
 		ArrayList<Cliente> clientePDB = new ArrayList<Cliente>();
-		clientePDB.add(new Cliente(1, "Pedro Alves"));
-		clientePDB.add(new Cliente(2, "Jose Alencar"));
-		clientePDB.add(new Cliente(3, "Paulo Freire"));
+		clientePDB.add(new Cliente(1, "PEDRO ALVES"));
+		clientePDB.add(new Cliente(2, "JOSE ALENCAR"));
+		clientePDB.add(new Cliente(3, "PAULO FREIRE"));
 		return clientePDB;
 	}
 	
 	private static ArrayList<Filial> createFilialInPDB() {
 		ArrayList<Filial> filialPDB = new ArrayList<Filial>();
-		filialPDB.add(new Filial(1, "Vinhais"));
-		filialPDB.add(new Filial(2, "Cohama"));
-		filialPDB.add(new Filial(3, "Rio Anil"));
-		filialPDB.add(new Filial(4, "Turu"));
+		filialPDB.add(new Filial(1, "VINHAIS",	new Estoque()));
+		filialPDB.add(new Filial(2, "COHAMA",	new Estoque()));
+		filialPDB.add(new Filial(3, "RIO ANIL", new Estoque()));
+		filialPDB.add(new Filial(4, "TURU", 	new Estoque()));
 		return filialPDB;
 	}
 	
 	private static ArrayList<Usuario> createUsuarioInPDB() {
 		ArrayList<Usuario> usuarioPDB = new ArrayList<Usuario>();
-		usuarioPDB.add(new Usuario(1, "Usr 2", "Carregador"));
-		usuarioPDB.add(new Usuario(2, "Usr 1", "Gerente de estoque"));
-		usuarioPDB.add(new Usuario(3, "Usr 3", "Carregador"));
+		usuarioPDB.add(new Usuario(1, "Usr 2", "VENDEDOR"));
+		usuarioPDB.add(new Usuario(2, "Usr 1", "GERENTE DE ESTOQUE"));
+		usuarioPDB.add(new Usuario(3, "Usr 3", "VENDEDOR"));
 		return usuarioPDB;
 	}
 
-
+	
 }

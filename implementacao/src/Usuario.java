@@ -21,4 +21,20 @@ public class Usuario {
 	public String getCargo() {
 		return this.cargo;
 	}
+	
+	// Change stuff
+	public int changeNome(String nNome) {
+		this.nome = nNome;
+		if(this.nome == nNome)
+			return 0; // ok
+		else
+			return -1;// not ok
+	}
+	public int changeCargo(String nCargo) {
+		this.cargo = nCargo;
+		if(this.cargo == nCargo)
+			return 0; // ok
+		else
+			return -1;// not ok
+	}
 }
