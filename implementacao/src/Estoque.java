@@ -1,22 +1,33 @@
 import java.util.Map;
 import java.util.HashMap;
+
 public class Estoque {
 	// Classe responsável por gerenciamento de estoque
-	private Map<Produto, Integer> estoque = new HashMap<Produto, Integer>(); // Dictionary<Produto, Count)
-	public Estoque() {};
+	private Map<Integer, Integer> estoque; // Dictionary<ID, Count>
+	public Estoque() {
+		this.estoque = new HashMap<Integer, Integer>();
+	}
 	
 	// Get stuff
-	public Map<Produto, Integer> getEstoque() {
-		return estoque;
+	public Map<Integer, Integer> getEstoque() {
+		return this.estoque;
 	}
 	
-	// Adicionar produto
-	public void entradaProduto(Produto prod, int volume) {
-		if(this.estoque.containsKey(prod)) // Se já existe atualiza
-			this.estoque.put(prod, this.estoque.get(prod)+volume);
+	// Adicionar em estoque
+	public void entradaProduto(int prodID, int volume) {
+		if(this.estoque.containsKey(prodID)) // Se existe em estoque
+			this.estoque.put(prodID, this.estoque.get(prodID)+volume);
 		else // Se não, cria
-			this.estoque.put(prod, volume);
+			this.estoque.put(prodID, volume);
 	}
-	
-	
+	// Remover em estoque
+	public void saidaProduto(int prodID, int volume) {
+		if(this.estoque.containsKey(prodID)) {// Se existe em estoque
+			if(this.estoque.get(prodID)<=0 || this.estoque.get(prodID)<volume) {
+				this.estoque.put(prodID, 0);
+			}else {
+				this.estoque.put(prodID, this.estoque.get(prodID)-volume);
+			}
+		}else {/*pass*/} // Se não, faz nada
+	}
 }

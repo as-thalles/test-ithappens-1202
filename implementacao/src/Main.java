@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.*;
 
 public class Main {
 	public static void main(String[] args) {
@@ -7,6 +8,8 @@ public class Main {
 		ArrayList<Cliente> tablePDB_cliente = createClienteInPDB(); // Pseudo database Cliente
 		ArrayList<Produto> tablePDB_produto = createPoductsInPDB(); // Pseudo database Produto
 		ArrayList<Filial> tablePDB_filial = createFilialInPDB(); // Pseudo database Filial
+		
+		
 	}
 
 	private static ArrayList<Produto> createPoductsInPDB() {
