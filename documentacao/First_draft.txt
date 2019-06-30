@@ -42,3 +42,10 @@
   > 3. Código bem amarrado, validando entradas e obedecendo estipulações do contexto.
   > 4. Usuário tem de poder testar.
   > BD opcional, mas diagramas e consultas são requeridos.
+
+## Bases de dados
+  > Produto: id, descrição/nome, preço_unitário
+  > Filial: id, descrição
+  > Usuário: id, nome, cargo
+  > Cliente: id, nome
+  > Estoque: dicionario_de_Produto <id_produto, qtd_em_estoque_filial>

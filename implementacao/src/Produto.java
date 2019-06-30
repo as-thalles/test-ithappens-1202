@@ -3,14 +3,12 @@ public class Produto {
 	private int idProduto;
 	private String descricao;
 	private float preco;
-	private String peso_unid; // Se vende por peso ou unidade
 
 	// Init
-	public Produto(int id, String desc, float preco, String peso_unid) {
+	public Produto(int id, String desc, float preco) {
 		this.idProduto = id;
 		this.descricao = desc;
 		this.preco = preco;
-		this.peso_unid = peso_unid;
 	}
 	
 	// Get stuff
@@ -22,9 +20,6 @@ public class Produto {
 	}
 	public float getPreco() {
 		return this.preco;
-	}
-	public String getPesoUnid() {
-		return this.peso_unid;
 	}
 	
 	// Change stuff
