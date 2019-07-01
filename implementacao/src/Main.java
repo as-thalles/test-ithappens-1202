@@ -383,15 +383,17 @@ public class Main {
 	
 	
 	private static ArrayList<Filial> createPDB_Filial() {
-		ArrayList<Filial> filialPDB = new ArrayList<Filial>();
-		filialPDB.add(new Filial(1, "COHAMA"));
+		ArrayList<Filial> pdbFilial = new ArrayList<Filial>();
+		pdbFilial.add(new Filial(1, "COHAMA"));
+		/*
 		PedidoEstoque.adicionarEmEstoque(1, 100, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(3, 110, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(5, 120, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(7, 130, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(9, 140, filialPDB.get(0).getEstoque(), pdbProduto);
-		
-		filialPDB.add(new Filial(2, "VINHAIS"));
+		*/
+		pdbFilial.add(new Filial(2, "VINHAIS"));
+		/*
 		PedidoEstoque.adicionarEmEstoque(1, 150, filialPDB.get(1).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(3, 160, filialPDB.get(1).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(5, 170, filialPDB.get(1).getEstoque(), pdbProduto);
@@ -399,8 +401,8 @@ public class Main {
 		PedidoEstoque.adicionarEmEstoque(10, 190, filialPDB.get(1).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(4, 100, filialPDB.get(1).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(6, 120, filialPDB.get(1).getEstoque(), pdbProduto);
-		
-		return filialPDB;
+		*/
+		return pdbFilial;
 	}
 	
 	private static ArrayList<Produto> createPDB_Poducts() {
