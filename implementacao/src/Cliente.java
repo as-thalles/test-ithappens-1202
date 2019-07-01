@@ -9,7 +9,7 @@ public class Cliente {
 		this.nome = nome;
 	}
 	
-	// Get stuff
+	// Gets
 	public int getID() {
 		return this.idCliente;
 	}
@@ -17,11 +17,11 @@ public class Cliente {
 		return this.nome;
 	}
 	
-	// Change stuff
+	// Changes
 	public int changeNome(String nNome) {
 		this.nome = nNome;
 		if(this.nome == nNome)
-			return 0; // ok
+			return 1; // ok
 		else
 			return -1;// not ok
 	}

@@ -5,13 +5,13 @@ public class Filial {
 	private Estoque estoque;
 	
 	// Init
-	public Filial(int id, String desc, Estoque estoque) {
+	public Filial(int id, String desc, Estoque stk) {
 		this.idFilial = id;
 		this.descricao = desc;
-		this.estoque = estoque;
+		this.estoque = stk;
 	}
 	
-	// Get stuff
+	// Gets
 	public int getID() {
 		return this.idFilial;
 	}
@@ -22,11 +22,11 @@ public class Filial {
 		return this.estoque;
 	}
 	
-	// Change stuff
+	// Changes
 	public int changeDesc(String nDesc) {
 		this.descricao = nDesc;
 		if(this.descricao == nDesc)
-			return 0; // ok
+			return 1; // ok
 		else
 			return -1;// not ok
 	}

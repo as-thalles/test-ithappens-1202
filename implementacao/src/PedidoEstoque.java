@@ -1,9 +1,6 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.lang.String;
 
-public class PedidoEstoque {
+public class PedidoEstoque extends Estoque {
 	// Classe responsável pelas >operações< de entrada/saída de estoque
 	private static boolean constaEmDB(int idProduto, ArrayList<Produto> pdbProduto) {
 		for(Produto it : pdbProduto) {
@@ -19,24 +16,21 @@ public class PedidoEstoque {
 	
 	public static int adicionarEmEstoque(int idProduto, int volume, Estoque stk, ArrayList<Produto> pdbProduto) {
 		if(constaEmDB(idProduto, pdbProduto)) {
-			stk.entradaProduto(idProduto, volume);
-		} else {
-			if(rotinaCriacaoProduto(pdbProduto) != -1) { // Se criou com sucesso
-				System.out.print("Deseja incluir em estoque? (Y/N): "); // TBD
-			}
+			return stk.entradaProduto(idProduto, volume);
 		}
 		return -1;
 	}
 	
 	public static int removerEmEstoque(int idProduto, int volume, Estoque stk, ArrayList<Produto> pdbProduto) {
-		if(constaEmDB(idProduto, pdbProduto)) {
-			if(constaEmEstoque(idProduto, stk)) {
+		if(constaEmDB(idProduto, pdbProduto))
+			if(constaEmEstoque(idProduto, stk))
 				return stk.saidaProduto(idProduto, volume);
-			}
-		}
 		return -1;
 	}
 	
+	/*
+	 * Criacao obsoleta
+	 * 
 	private static int rotinaCriacaoProduto(ArrayList<Produto> pdbProduto) {
 		Scanner scanInput = new Scanner(System.in);
 		String descricao = "Placeholder"; // Descrição do produto
@@ -92,4 +86,5 @@ public class PedidoEstoque {
 		}
 		return -1;
 	}
+	*/
 }

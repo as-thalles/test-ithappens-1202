@@ -11,7 +11,7 @@ public class Usuario {
 		this.cargo = cargo;
 	}
 	
-	// Get stuff
+	// Gets
 	public int getID(){
 		return this.idUsuario;
 	}
@@ -22,18 +22,18 @@ public class Usuario {
 		return this.cargo;
 	}
 	
-	// Change stuff
+	// Changes
 	public int changeNome(String nNome) {
 		this.nome = nNome;
 		if(this.nome == nNome)
-			return 0; // ok
+			return 1; // ok
 		else
 			return -1;// not ok
 	}
 	public int changeCargo(String nCargo) {
 		this.cargo = nCargo;
 		if(this.cargo == nCargo)
-			return 0; // ok
+			return 1; // ok
 		else
 			return -1;// not ok
 	}

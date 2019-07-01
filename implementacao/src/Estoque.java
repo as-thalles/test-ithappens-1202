@@ -2,35 +2,37 @@ import java.util.Map;
 import java.util.HashMap;
 
 public class Estoque {
-	// Classe responsável por gerenciamento de estoque
-	private Map<Integer, Integer> relacaoPdQt; // Dictionary<ID, Count>
+	// Classe que representa o estoque
+	private Map<Integer, Integer> relacaoPdQt; // Dictionary< ID, Count >
 	public Estoque() {
 		this.relacaoPdQt = new HashMap<Integer, Integer>();
 	}
 	
-	// Get stuff
+	// Gets
 	public Map<Integer, Integer> getRelacao() {
 		return this.relacaoPdQt;
 	}
 	
 	// Adicionar em estoque
-	public int entradaProduto(int prodID, int volume) {
-		if(this.relacaoPdQt.containsKey(prodID)) // Se existe em estoque
-			this.relacaoPdQt.put(prodID, this.relacaoPdQt.get(prodID)+volume);
+	protected int entradaProduto(int idProduto, int volume) {
+		if(this.relacaoPdQt.containsKey(idProduto)) // Se existe em estoque
+			this.relacaoPdQt.put(idProduto, this.relacaoPdQt.get(idProduto)+volume); // Incrementa
 		else // Se não, cria
-			this.relacaoPdQt.put(prodID, volume);
-		return 1; // Worked
+			this.relacaoPdQt.put(idProduto, volume);
+		return 1; // ok
 	}
 	
 	// Remover em estoque
-	public int saidaProduto(int prodID, int volume) {
-		if(this.relacaoPdQt.containsKey(prodID)) {// Se existe em estoque
-			if(this.relacaoPdQt.get(prodID)<=0 || this.relacaoPdQt.get(prodID)<volume) {
-				return -1; // Pode não
-			} else {
-				this.relacaoPdQt.put(prodID, this.relacaoPdQt.get(prodID)-volume);
-			}
-		}else {/*pass*/} // Se não, faz nada
+	protected int saidaProduto(int idProduto, int volume) {
+		if(this.relacaoPdQt.containsKey(idProduto)) { // Se existe em estoque
+			// Se existe 0 ou se tem menos do que manda tirar, não pode.
+			if(this.relacaoPdQt.get(idProduto)<=0 || this.relacaoPdQt.get(idProduto)<volume)
+				return -1; // Não pode
+			else // Se quantidades ok
+				this.relacaoPdQt.put(idProduto, this.relacaoPdQt.get(idProduto)-volume); // Remove
+		} else { // Tentando remover quem nem existe
+			return -1;
+		}
 		return 1;
 	}
 }

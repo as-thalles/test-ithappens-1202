@@ -11,7 +11,7 @@ public class Produto {
 		this.preco = preco;
 	}
 	
-	// Get stuff
+	// Gets
 	public int getID() {
 		return this.idProduto;
 	}
@@ -22,18 +22,18 @@ public class Produto {
 		return this.preco;
 	}
 	
-	// Change stuff
+	// Changes
 	public int changeDesc(String nDesc) {
 		this.descricao = nDesc;
 		if(this.descricao == nDesc)
-			return 0; // ok
+			return 1; // ok
 		else
 			return -1;// not ok
 	}
 	public int changePreco(float nPreco) {
 		this.preco = nPreco;
 		if(this.preco == nPreco)
-			return 0; // ok
+			return 1; // ok
 		else
 			return -1;// not ok
 	}
