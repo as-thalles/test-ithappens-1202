@@ -2,8 +2,8 @@
 
 ## Tarefa principal:
   > Ser capaz de realizar venda.
-  > Ser capaz de realizar entrada/saída em estoque.
-  > Incluir estrutura básica que permita a realização destas tarefas.
+  > Ser capaz de realizar entrada/saída em estoque. :check:
+  > Incluir estrutura básica que permita a realização destas tarefas. :check:
 
 ## Contexto/problemática:
   > Venda:
@@ -26,21 +26,22 @@
       - A vista/boleto/cartão
       - Muda status dos itens para "processado"
       - Decrementa volume no estoque (da filial)
-  > Controle de estoque (entrada/saída):
-    * Cada filial tem estoque próprio (individual) de cada produto
-    * Entrada e saída de mercadoria em filial é feita apenas por operações de estoque (e/s)
-    * Pedido: itens, quantidades, e/s
-      - Entrada:
-        + Caso exista, incrementar
-        + Else, criar
-      - Saída:
-        + Decrementar da filial
+  > Controle de estoque (entrada/saída): :check:
+    * Cada filial tem estoque próprio (individual) de cada produto :check:
+    * Entrada e saída de mercadoria em filial é feita apenas por operações de estoque (e/s) :check:
+    * Pedido: itens, quantidades, e/s :check:
+      - Entrada: :check:
+        + Caso exista, incrementar :check:
+        + Else, criar :check:
+          Nota: incerto se deveria incluir metodo de adicionar a base de dados. Texto ambíguo. Optei por não.
+      - Saída: :check:
+        + Decrementar da filial :check:
 
 ## Competências
-  > 1. Domínios = classes?
+  > 1. Domínios = classes. :check:
   > 2. Operações requeridas.
   > 3. Código bem amarrado, validando entradas e obedecendo estipulações do contexto.
-  > 4. Usuário tem de poder testar.
+  > 4. Usuário tem de poder testar. :check:
   > BD opcional, mas diagramas e consultas são requeridos.
 
 ## Bases de dados

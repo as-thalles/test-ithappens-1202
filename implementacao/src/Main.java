@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 	public static void main(String[] args) {
 		/*/
-		 * Bloco de pré-configurações (bases de dados de teste)
+		 * Bloco de pre-configuracoes (bases de dados de teste)
 		/*/
 		
 		// Inicializando base de dados de teste
@@ -17,24 +17,10 @@ public class Main {
 		ArrayList<Filial> tablePDB_filial = createFilialInPDB(tablePDB_produto); // Pseudo database Filial
 		
 		/*/
-		 * Bloco de configurações ("login")
+		 * Bloco de atividades (menu/operacoes)
 		/*/
 		
-		// Seleção de Usuario ativo da sessão:
-		Usuario session_user = selectUser(tablePDB_usuario);
-		if(session_user != null)
-			System.out.println("Bem vindo(a), " + session_user.getNome() + "\n\n");
-
-		// Seleção da filial ativa da sessão:
-		Filial session_fil = selectFilial(tablePDB_filial);
-		if(session_fil != null)
-			System.out.println("Filial ativa: " + session_fil.getDescricao() + "\n\n");
-		
-		/*/
-		 * Bloco de atividades (menu/operações)
-		/*/
-		
-		// Variáveis de controle de menu
+		// Variaveis de controle de menu
 		Scanner scanInput = new Scanner(System.in);
 		int main_menu_opt = -1;
 		
@@ -44,7 +30,7 @@ public class Main {
 			// Option selection + input filter
 			if(scanInput.hasNextInt()) { // Se input for int
 				main_menu_opt =	scanInput.nextInt();
-				if(main_menu_opt < 0 || main_menu_opt > 4) { // Se opção inválida
+				if(main_menu_opt < 0 || main_menu_opt > 4) { // Se opcao invalida
 					System.out.println("Comando invalido.");
 					try {
 						TimeUnit.MICROSECONDS.sleep(500);
@@ -54,8 +40,8 @@ public class Main {
 					main_menu_opt = -1;
 					continue;
 				}
-			} else { // Entrada contém valor não numérico
-				System.out.println("Apenas valores numéricos inteiros.");
+			} else { // Entrada contem valor nao numerico
+				System.out.println("Apenas valores numericos inteiros.");
 				try {
 					TimeUnit.MICROSECONDS.sleep(500);
 				} catch (InterruptedException e) {
@@ -67,33 +53,41 @@ public class Main {
 			}
 			// Actions
 			switch(main_menu_opt) {
-				case 0: // Sair/Fim de execução
+				case 0: // Sair/Fim de execucao
 					break;
 				case 1: // Venda
+					if(vendaDeProdutos(tablePDB_filial, tablePDB_usuario, tablePDB_cliente, tablePDB_produto) == -1)
+						System.out.println("Algo deu errado.");
+					else
+						System.out.println("Venda efetuada com sucesso!");
 					break;
 				case 2: // Entrada em estoque
-					if(entradaEstoque(session_fil, tablePDB_produto) == -1)
+					if(entradaEstoque(tablePDB_filial, tablePDB_produto) == -1)
 						System.out.println("Algo deu errado.");
 					else
 						System.out.println("Adicionado com sucesso!");
 					break;
 				case 3: // Saída em estoque
-					if(saidaEstoque(session_fil, tablePDB_produto) == -1)
+					if(saidaEstoque(tablePDB_filial, tablePDB_produto) == -1)
 						System.out.println("Algo deu errado.");
 					else
 						System.out.println("Removido com sucesso!");
 					break;
 				case 4:
-					for(int id : session_fil.getEstoque().getRelacao().keySet())
+					// Seleção da filial ativa da sessão:
+					Filial fil = selectFilial(tablePDB_filial);
+					if(fil == null) { break; }
+					// Listando
+					for(int id : fil.getEstoque().getRelacao().keySet())
 						for(Produto pd : tablePDB_produto)
 							if(pd.getID() == id)
 								System.out.println(pd.getID() + ". " + pd.getDescricao()
-								+ " \tQtd.: " + session_fil.getEstoque().getRelacao().get(id));
+								+ " \tQtd.: " + fil.getEstoque().getRelacao().get(id));
 					break;
 			}
 		}
 		scanInput.close();
-		System.out.println("Fim de execução.");
+		System.out.println("Fim de execucao.");
 	}
 
 	// Usuario ativo da sessão:
@@ -154,6 +148,35 @@ public class Main {
 		return null;
 	}
 	
+	// Cliente ativo da sessão:
+	private static Cliente selectCliente(ArrayList<Cliente> tableClt) {
+		Scanner scanInput = new Scanner(System.in);
+		int cltID = -1;
+		System.out.println(">> Identificação do Usuário");
+		// Print usuarios
+		for(Cliente clt : tableClt)
+			System.out.println(clt.getID() + ". " + clt.getNome());
+		// Recebe ID usuário
+		while(cltID == -1) {
+			System.out.print("\n> ID Usuario?:");
+			if(scanInput.hasNextInt()) { // Input numérico
+				cltID = scanInput.nextInt();
+				for(Cliente clt: tableClt) // Itera para validar
+					if( clt.getID() == cltID ) // ID válido
+						return clt;
+			}
+			System.out.println("ID invalido.");
+			try {
+				TimeUnit.MICROSECONDS.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			scanInput.nextLine(); // Clear buffer
+			cltID = -1; // Reset status
+		}
+		return null;
+	}
+	
 	// Main menu
  	private static void printMainMenu() {
 		System.out.print("\n\n");
@@ -165,11 +188,15 @@ public class Main {
 		System.out.println("0. Sair");
 	}
 
- 	// Escolher dados para saída de estoque
-	private static int saidaEstoque(Filial fil, ArrayList<Produto> pdbProduto) {
+ 	// Escolher dados para saida de estoque
+	private static int saidaEstoque(ArrayList<Filial> pdbFilial, ArrayList<Produto> pdbProduto) {
 		Scanner scanInput = new Scanner(System.in);
 		int produtoID = -1, volume = -1;
 		
+		// Seleção da filial ativa da sessão:
+		Filial fil = selectFilial(pdbFilial);
+		if(fil == null) { return -1; }
+				
 		// Print tabela de produtos (estoque da filial)
 		System.out.println("> Estoque atual da filial:");
  		for(int id : fil.getEstoque().getRelacao().keySet())
@@ -227,11 +254,15 @@ public class Main {
 		return PedidoEstoque.removerEmEstoque(produtoID, volume, fil.getEstoque(), pdbProduto);
 	}
 	
-	private static int entradaEstoque(Filial fil, ArrayList<Produto> pdbProduto) {
+	private static int entradaEstoque(ArrayList<Filial> pdbFilial, ArrayList<Produto> pdbProduto) {
 		Scanner scanInput = new Scanner(System.in);
 		boolean existe = false;
 		int produtoID = -1, volume = -1;
 		char yn = 'a';
+		
+		// Seleção da filial ativa da sessão:
+		Filial fil = selectFilial(pdbFilial);
+		if(fil == null) { return -1; }
 		
 		// Print tabela de produtos (geral)
 		for(Produto pd : pdbProduto)
@@ -285,43 +316,82 @@ public class Main {
 		}
 		return PedidoEstoque.adicionarEmEstoque(produtoID, volume, fil.getEstoque(), pdbProduto);
 	}
+	
+	private static int vendaDeProdutos(ArrayList<Filial> pdbFilial, ArrayList<Usuario> pdbUsuario, ArrayList<Cliente> pdbCliente, ArrayList<Produto> pdbProduto) {
+		// Selecao de Usuario:
+		Usuario session_user = selectUser(pdbUsuario);
+		if(session_user != null)
+			System.out.println("Usuario: " + session_user.getNome() + "\n");
+		else
+			return -1;
+		// Selecao de cliente ativo da sessao:
+		Cliente session_clt = selectCliente(pdbCliente);
+		if(session_clt != null)
+			System.out.println("Cliente ativo: " + session_clt.getNome() + "\n");
+		else
+			return -1;
+		// Selecao da filial ativa da sessao:
+		Filial session_fil = selectFilial(pdbFilial);
+		if(session_fil != null)
+			System.out.println("Filial ativa: " + session_fil.getDescricao() + "\n");
+		else
+			return -1;
+		// Observacao de entrega:
+		Scanner scanInput = new Scanner(System.in);
+		String obs = scanInput.nextLine();
+		
+		// Registra novo pedido
+		PedidoEstoque pedido = new PedidoEstoque(session_fil, session_user, session_clt, obs);
+
+		// Listar Estoque da filial
+		for(int id : session_fil.getEstoque().getRelacao().keySet())
+			for(Produto pd : pdbProduto)
+				if(pd.getID()==id)
+					System.out.println(pd.getID() + ". " + pd.getDescricao()
+					+ "\tQtd.: " + session_fil.getEstoque().getRelacao().get(id));
+		
+		// Preenche pedido
+		int produtoID = -1;
+		System.out.println("Para interromper insercao: 0");
+		while(produtoID != 0) {
+			if(scanInput.hasNextInt()) {
+				produtoID = scanInput.nextInt();
+				//TBD
+				if(pedido.adicionarAoPedido(produtoID, qtd, session_fil.getEstoque(), pdbProduto) == -1)
+					return -1;
+			} else { // Entrada foi char/String
+				System.out.println("Apenas valores numericos inteiros.");
+				try {
+					TimeUnit.MICROSECONDS.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				scanInput.nextLine(); // Clear buffer
+				produtoID = -1;
+				continue;
+			}
+		}
+		
+		// Realizar pedido
+		return 1;
+	}
+	
 	/*/
 	 * Inicializando as bases de dados
 	/*/
 	
-	private static ArrayList<Produto> createPoductsInPDB() {
-		ArrayList<Produto> produtosPDB = new ArrayList<Produto>();
-		produtosPDB.add(new Produto(1,	"ARROZ 1KG",			3.99f));
-		produtosPDB.add(new Produto(2,	"SAL 1KG",				0.99f));
-		produtosPDB.add(new Produto(3,	"CADERNO",				12.99f));
-		produtosPDB.add(new Produto(4,	"PILHAS",				4.49f));
-		produtosPDB.add(new Produto(5,	"NESCAU 500G",			5.99f));
-		produtosPDB.add(new Produto(6,	"BISCOITO DE CHOCOLATE",1.55f));
-		produtosPDB.add(new Produto(7,	"FONE DE OUVIDO", 		59.00f));
-		produtosPDB.add(new Produto(8,	"CABO USB", 			15.00f));
-		produtosPDB.add(new Produto(9,	"DETERGENTE 600ML",		6.90f));
-		produtosPDB.add(new Produto(10,	"SABAO EM BARRA 600G",	10.39f));
-		return produtosPDB;
-	}
 	
-	private static ArrayList<Cliente> createClienteInPDB() {
-		ArrayList<Cliente> clientePDB = new ArrayList<Cliente>();
-		clientePDB.add(new Cliente(1, "PEDRO ALVES"));
-		clientePDB.add(new Cliente(2, "JOSE ALENCAR"));
-		clientePDB.add(new Cliente(3, "PAULO FREIRE"));
-		return clientePDB;
-	}
 	
-	private static ArrayList<Filial> createFilialInPDB(ArrayList<Produto> pdbProduto) {
+	private static ArrayList<Filial> createPDB_Filial() {
 		ArrayList<Filial> filialPDB = new ArrayList<Filial>();
-		filialPDB.add(new Filial(1, "COHAMA",	new Estoque()));
+		filialPDB.add(new Filial(1, "COHAMA"));
 		PedidoEstoque.adicionarEmEstoque(1, 100, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(3, 110, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(5, 120, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(7, 130, filialPDB.get(0).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(9, 140, filialPDB.get(0).getEstoque(), pdbProduto);
 		
-		filialPDB.add(new Filial(2, "VINHAIS",	new Estoque()));
+		filialPDB.add(new Filial(2, "VINHAIS"));
 		PedidoEstoque.adicionarEmEstoque(1, 150, filialPDB.get(1).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(3, 160, filialPDB.get(1).getEstoque(), pdbProduto);
 		PedidoEstoque.adicionarEmEstoque(5, 170, filialPDB.get(1).getEstoque(), pdbProduto);
@@ -333,12 +403,36 @@ public class Main {
 		return filialPDB;
 	}
 	
-	private static ArrayList<Usuario> createUsuarioInPDB() {
-		ArrayList<Usuario> usuarioPDB = new ArrayList<Usuario>();
-		usuarioPDB.add(new Usuario(1, "Ana Carolina", "VENDEDOR"));
-		usuarioPDB.add(new Usuario(2, "Pedro Chaves", "GERENTE DE ESTOQUE"));
-		usuarioPDB.add(new Usuario(3, "Marcos Silva", "VENDEDOR"));
-		return usuarioPDB;
+	private static ArrayList<Produto> createPDB_Poducts() {
+		ArrayList<Produto> pdbProduto = new ArrayList<Produto>();
+		pdbProduto.add(new Produto(1,	"ARROZ 1KG",			3.99f));
+		pdbProduto.add(new Produto(2,	"SAL 1KG",				0.99f));
+		pdbProduto.add(new Produto(3,	"CADERNO",				12.99f));
+		pdbProduto.add(new Produto(4,	"PILHAS",				4.49f));
+		pdbProduto.add(new Produto(5,	"NESCAU 500G",			5.99f));
+		pdbProduto.add(new Produto(6,	"BISCOITO DE CHOCOLATE",1.55f));
+		pdbProduto.add(new Produto(7,	"FONE DE OUVIDO", 		59.00f));
+		pdbProduto.add(new Produto(8,	"CABO USB", 			15.00f));
+		pdbProduto.add(new Produto(9,	"DETERGENTE 600ML",		6.90f));
+		pdbProduto.add(new Produto(10,	"SABAO EM BARRA 600G",	10.39f));
+		return pdbProduto;
+	}
+	
+	private static ArrayList<Cliente> createPDB_Cliente() {
+		ArrayList<Cliente> pdbCliente = new ArrayList<Cliente>();
+		pdbCliente.add(new Cliente(1, "PEDRO CABRAL"));
+		pdbCliente.add(new Cliente(2, "JOSE ALENCAR"));
+		pdbCliente.add(new Cliente(3, "PAULO FREIRE"));
+		return pdbCliente;
+	}
+	
+	private static ArrayList<Usuario> createPDB_Usuario() {
+		ArrayList<Usuario> pdbUsuario = new ArrayList<Usuario>();
+		pdbUsuario.add(new Usuario(1, "Ana Carolina"));
+		pdbUsuario.add(new Usuario(2, "Pedro Chaves"));
+		pdbUsuario.add(new Usuario(3, "Marcos Silva"));
+		pdbUsuario.add(new Usuario(4, "Erika Barros"));
+		return pdbUsuario;
 	}
 
 }

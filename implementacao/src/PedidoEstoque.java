@@ -1,7 +1,47 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class PedidoEstoque extends Estoque {
+public class PedidoEstoque {
 	// Classe responsável pelas >operações< de entrada/saída de estoque
+	private int idUser, idCliente, idFilial;
+	private String observacao;
+	ItensPedido lista_pedido;
+	private int valor_total;
+	
+	// Init
+	public PedidoEstoque(Filial fil, Usuario usr, Cliente clt, String obs) {
+		this.lista_pedido = new ItensPedido();
+		this.idFilial = fil.getID();
+		this.idUser = usr.getID();
+		this.idCliente = clt.getID();
+		this.valor_total = 0;
+	}
+	
+	// Gets
+	public String getObs() {
+		return this.observacao;
+	}
+	public int getUsrID() {
+		return this.idUser;
+	}
+	public int getCltID() {
+		return this.idCliente;
+	}
+	public int getFilID() {
+		return this.idFilial;
+	}
+	
+	// Changes
+	public int changeObs(String nObs) {
+		this.observacao = nObs;
+		if(this.observacao == nObs)
+			return 1;
+		else
+			return -1;
+	}
+	
+	// Various operations
 	private static boolean constaEmDB(int idProduto, ArrayList<Produto> pdbProduto) {
 		for(Produto it : pdbProduto) {
 			if(it.getID() == idProduto)
@@ -25,6 +65,16 @@ public class PedidoEstoque extends Estoque {
 		if(constaEmDB(idProduto, pdbProduto))
 			if(constaEmEstoque(idProduto, stk))
 				return stk.saidaProduto(idProduto, volume);
+		return -1;
+	}
+	
+	public int adicionarAoPedido(int itemID, int volume, Estoque stk, ArrayList<Produto> pdbProduto) {
+		if(constaEmDB(itemID, pdbProduto))
+			if(constaEmEstoque(itemID, stk))
+				if(stk.getRelacao().get(itemID) > volume) {
+					this.lista_pedido.addToCart(itemID, volume, "ATIVO");
+					return 1;
+				}
 		return -1;
 	}
 	

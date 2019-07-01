@@ -22,7 +22,6 @@ public class Cliente {
 		this.nome = nNome;
 		if(this.nome == nNome)
 			return 1; // ok
-		else
-			return -1;// not ok
+		return -1;// not ok
 	}
 }

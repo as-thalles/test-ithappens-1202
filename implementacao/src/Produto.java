@@ -27,14 +27,12 @@ public class Produto {
 		this.descricao = nDesc;
 		if(this.descricao == nDesc)
 			return 1; // ok
-		else
-			return -1;// not ok
+		return -1;// not ok
 	}
 	public int changePreco(float nPreco) {
 		this.preco = nPreco;
 		if(this.preco == nPreco)
 			return 1; // ok
-		else
-			return -1;// not ok
+		return -1;// not ok
 	}
 }
